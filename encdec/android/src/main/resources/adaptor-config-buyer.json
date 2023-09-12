@@ -1,0 +1,119 @@
+[
+	{
+		"subscriber_id": "indiapost.logistics.test",
+		"subscriber_url": "https://3.111.199.126/",
+		"beckn_gateway":"pilot-gateway-1.beckn.nsdl.co.in",		
+		"keyid": "beckn.org-|1",
+		"disable_adaptor_calls": "true",
+		"whitelist_baps": "sandbox.indiapost.com/delivery/bap",
+		"signing": {
+			"certificate_used": false,
+			"certificate_type": "",
+			"certificate_alias": "",
+			"certificate_path": "",
+			"certificate_pwd": "",
+			"private_key": "TCpWc7hnf1qM2Pdr+fP7Ezn0adaA7c9QgKLl7oXByoI="
+		},
+		"api": [
+			{
+				"name": "search",
+				"http_entity_endpoint": "http://localhost:8089/seller/mock/search",
+				"http_timeout": 8000,
+				"http_retry_count": 0,
+				"header_validity": 600000,
+				"header_authentication": false,
+				"set_authorization_header": false
+			},
+			{
+				"name": "select",
+				"http_entity_endpoint": "http://localhost:8089/seller/mock/select",
+				"http_timeout": 8000,
+				"http_retry_count": 0,
+				"header_validity": 600000,
+				"header_authentication": false,
+				"set_authorization_header": false
+			},
+			{
+				"name": "cancel",
+				"http_entity_endpoint": "http://localhost:8089/seller/mock/cancel",
+				"http_timeout": 8000,
+				"http_retry_count": 0,
+				"header_validity": 600000,
+				"header_authentication": false,
+				"set_authorization_header": false
+			},
+			{
+				"name": "confirm",
+				"http_entity_endpoint": "http://localhost:8089/seller/mock/confirm",
+				"http_timeout": 8000,
+				"http_retry_count": 0,
+				"header_validity": 600000,
+				"header_authentication": false,
+				"set_authorization_header": false
+			},
+			{
+				"name": "init",
+				"http_entity_endpoint": "http://localhost:8089/seller/mock/init",
+				"http_timeout": 8000,
+				"http_retry_count": 0,
+				"header_validity": 600000,
+				"header_authentication": false,
+				"set_authorization_header": false
+			},
+			{
+				"name": "rating",
+				"http_entity_endpoint": "http://localhost:8089/seller/mock/rating",
+				"http_timeout": 8000,
+				"http_retry_count": 0,
+				"header_validity": 600000,
+				"header_authentication": false,
+				"set_authorization_header": false
+			},
+			{
+				"name": "status",
+				"http_entity_endpoint": "http://localhost:8089/seller/mock/status",
+				"http_timeout": 8000,
+				"http_retry_count": 0,
+				"header_validity": 600000,
+				"header_authentication": false,
+				"set_authorization_header": false
+			},
+			{
+				"name": "support",
+				"http_entity_endpoint": "http://localhost:8089/seller/mock/support",
+				"http_timeout": 8000,
+				"http_retry_count": 0,
+				"header_validity": 600000,
+				"header_authentication": false,
+				"set_authorization_header": false
+			},
+			{
+				"name": "track",
+				"http_entity_endpoint": "http://localhost:8089/seller/mock/track",
+				"http_timeout": 8000,
+				"http_retry_count": 0,
+				"header_validity": 600000,
+				"header_authentication": true,
+				"set_authorization_header": true
+			},
+			{
+				"name": "update",
+				"http_entity_endpoint": "http://localhost:8089/seller/mock/update",
+				"http_timeout": 8000,
+				"http_retry_count": 0,
+				"header_validity": 600000,
+				"header_authentication": true,
+				"set_authorization_header": true
+			},
+			{
+				"name": "lookup",
+				"http_entity_endpoint": "https://pilot-gateway-1.beckn.nsdl.co.in/lookup",
+				"http_timeout": 9000,
+				"http_retry_count": 0,
+				"header_validity": 600000,
+				"header_authentication": true,
+				"set_authorization_header": false
+			}
+		]
+	}
+]

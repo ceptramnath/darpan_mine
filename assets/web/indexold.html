@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"    		content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=yes">
+	
+	<meta name="application-name"	content="Postman File Browser">	
+	<meta name="owner" 				content="Raveesh G S">
+	<meta name="author"      		content="Raveesh G S">	
+	<meta name="designer" 			content="Raveesh G S">	
+	<meta name="description" 		content="Programmet @ C E P T, PTC Campus, Mysore-570010">
+	<meta name="emailAddress" 		content="raveesh.gs@indiapost.gov.in" />
+	<meta name="url" 				content="https://www.facebook.com/raveesh.gs">
+	<meta name="copyright"			content="2020">
+	
+	<link rel="stylesheet" 			href="material.min.css">
+	<script 						src="material.min.js"></script>
+			
+    <title>Postman File Browser</title>
+    
+    <script>	
+	try 
+	{
+		history.pushState(null, document.title, location.href); 
+		history.back(); 
+		history.forward(); 
+		window.onpopstate = function () 
+		{ 
+			history.go(1);				
+		};	
+		
+        function fetchData(a) 
+		{	
+			try 
+			{		
+				var b;			
+				url = window.location.href.split("/"),
+				document.getElementById("logo").src = url[0] + "//" + url[2] + "/logo",			
+				url = url[0] + "//" + url[2] + "/dir",			
+				b = new XMLHttpRequest, b.onreadystatechange = function() 
+				{
+					4 == this.readyState && 200 == this.status && a(this)
+				}, b.open("GET", url, !0), b.send();
+			}			
+			catch(ex1) 
+			{
+				console.log('fetchData Error: ' + ex1);
+			}			
+		}		
+
+		function myFunction(a) 
+		{
+			try 
+			{
+				var u=window.location.protocol+"//"+window.location.hostname+":"+window.location.port;	
+				var folders=[];
+				var d, b = JSON.parse(a.responseText),
+					c = "";	
+				
+				if(window.location.href==(u+"/"))	
+				{							
+					c +="<div class='mdl-card__supporting-text'>";			
+					c +="<h4>Folders</h4>";
+					folders=[];
+					for (url = window.location.href.split("/"), url = url[0] + "//" + url[2] + "/dir/", d = 0; d < b.length; d++)
+					{	
+						var folder=b[d].split("/").pop();
+						folders.push(folder);
+						c += "<a class='' href='" + url + d + "' ><span class='mdl-typography--subhead'>" + folder + "</span></a><br><br>";
+					}
+					c +="</div>";	
+					document.getElementById("folder_title").innerHTML = "";				
+					localStorage['folder_title'] = folders;			
+				}			
+				else
+				{
+					if(b.length>0)
+					{				
+						c +="<table class='mdl-data-table mdl-js-data-table mdl-shadow--4dp'>";
+						c +="<thead>";
+						c +="<tr>";
+						c +="<th class='mdl-data-table__cell--non-numeric'><span class='mdl-typography--button mdl-color-text--grey-700'>Index</span></th>";
+						c +="<th class='mdl-data-table__cell--non-numeric'><span class='mdl-typography--button mdl-color-text--grey-700'>Link</span></th>";
+						c +="<th class='mdl-data-table__cell--non-numeric'><span class='mdl-typography--button mdl-color-text--grey-700'>File Name</span></th>";
+						c +="</tr>";	
+						c +="</thead>";
+						c +="<tbody>";
+						for (url = window.location.href.split("/"), url = url[0] + "//" + url[2] + "/file/", d = 0; d < b.length; d++)
+						{
+							c +="<tr>";
+							c +="<td class='mdl-data-table__cell--non-numeric'>"+d+"</td>";
+							c +="<td class='mdl-data-table__cell--non-numeric'>";
+							c += "<a class='' href='" + url + d + "'>Download</a>";
+							c +="</td>";
+							c +="<td class='mdl-data-table__cell--non-numeric'>"+b[d].split("/").pop()+"</td>";
+							c +="</tr>";
+						}
+						c +="</tbody>";
+						c +="</table>";
+					}
+					folders = localStorage['folder_title'].split(",");					
+					document.getElementById("folder_title").innerHTML =folders[window.location.href.split("/")[4]];				
+				}
+				
+				document.getElementById("id01").innerHTML = c;						
+				document.getElementById("home").href=u;	
+			
+			}			
+			catch(ex2) 
+			{
+				console.log('myFunction Error: ' + ex2);
+			}
+			
+			getUser();				
+		}		
+	}
+	catch(ex) 
+	{
+		console.log('OnLoad Error: ' + ex);
+	}
+		
+    </script>
+	
+	<script>
+			
+	function getUser()
+	{
+		try 
+		{	
+			var m = window.location.href.split("/");
+			m = m[0] + "//" + m[2] + "/user";	
+			
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() 
+			{
+				if(this.readyState ==4 && this.status == 200)
+				{
+					var user=JSON.parse(this.responseText);	
+					document.getElementById("user_id").innerHTML 		= user.EmpId;
+					document.getElementById("user_name").innerHTML 		= user.PostmanName;
+					document.getElementById("user_batch").innerHTML 	= user.BatchNo;
+					document.getElementById("user_beat").innerHTML 		= user.BeatNo;
+					document.getElementById("user_facility").innerHTML 	= user.FacilityId;
+					document.getElementById("user_device").innerHTML 	= user.DeviceId;
+				}
+			};
+			xhttp.open("GET", m, !0);
+			xhttp.send();	
+		}
+		catch(ex) 
+		{
+			console.log('getUser Error: ' + ex);
+		}		
+	}		
+		
+	function showMessage(msg)
+	{
+		var contact = document.getElementById("contact");
+		if((window.location.href==(u+"/file/1")) || (window.location.href==(u+"/file/2")))
+		{
+			contact.style.display = "";
+		}
+		else
+		{
+			contact.style.display = "none";
+		}
+		var dialog = document.querySelector('#dialog');
+		if (! dialog.showModal) 
+		{
+		  dialogPolyfill.registerDialog(dialog);
+		}
+		dialog.querySelector('button:not([disabled])')
+		.addEventListener('click', function() 
+		{
+		  dialog.close();
+		});
+		document.getElementById("dialog_content").innerHTML = msg;
+		dialog.showModal();
+	}
+	
+	</script>
+		
+	<style>
+		   
+		.mdl-sheet__container 
+		{
+		  position: fixed;
+		  right: 32px;
+		  bottom: 32px;
+		  transform: rotate(0deg);
+		  background: #FF9800 !important;
+		}
+
+		.mdl-sheet 
+		{
+		  position: absolute;
+		  right: 0;
+		  bottom: 0;
+		  
+		  background: #FF5722;
+		  width: 60px;
+		  height: 60px;
+		  border-radius: 50%;
+		  
+		  cursor: pointer;
+		  transition: all 180ms;
+		  
+		  .mdl-sheet__content 
+		  {
+			display: none;
+		  }
+		}
+
+		.mdl-sheet__icon 
+		{
+		  color: #fff;
+		  position: absolute;
+		  top: 50%;
+		  left: 50%;
+		  transform: translate(-12px, -12px);
+		  font-size: 24px;
+		  width: 24px;
+		  height: 24px;
+		  line-height: 24px;
+		}
+		.text-blue-grey
+		{
+			color:#607D8B !important;
+		}
+		
+		.text-link-color
+		{
+			color:#0091EA !important;
+		}
+		
+		a.text-link-color:hover
+        {
+          color: #E91E63 !important;
+        }
+		
+		.padding_bottom_zero
+		{
+			padding-bottom: 0px !important;
+		}
+		
+		.padding_top_zero
+		{
+			padding-top: 0px !important;
+		}
+		.margin_top_zero
+		{
+			margin-top: 0px !important;
+		}
+		
+		table>tbody>tr>td:nth-child(3)
+        {
+        	word-wrap: break-word !important; 
+        	white-space: normal !important;
+			word-break: break-all !important;
+        }
+		
+	</style>
+	
+</head>
+<body  onload="fetchData(myFunction);">
+
+<div id="demo" class="mdl-card__supporting-text">    
+	<div class="mdl-list__item padding_bottom_zero">
+      <img id="logo" height="100px" width="100px"/>
+      <span class="mdl-card__supporting-text mdl-color-text--grey-700 padding_bottom_zero padding_top_zero">
+        <h3 class="padding_top_zero margin_top_zero">
+			<span class="text-blue-grey">File Browser</span>
+			<br>			
+            <div class="mdl-typography--caption mdl-color-text--grey-600" hidden>Department of Posts<sup>&#169;</sup> 2016-2020. All rights reserved.<br><br></div>
+			
+			<div class="mdl-typography--title mdl-color-text--grey-600" hidden>Department of Posts
+				<br>
+				<div class="mdl-typography--subhead">Designed & Developed by Centre For Excellence in Postal Technology ( C.E.P.T )<br>Mysuru 570010</div>			
+			</div>      
+        		
+			<div class="mdl-color-text--grey-600">			
+				<table class="mdl-js-data-table">  
+				  <tbody>    
+					<tr class="mdl-card__supporting-text">
+					  <td >User ID</td>
+					  <td>:</td>
+					  <td>
+						<b>
+						  <span id="user_id"></span>
+						</b>
+					  </td>      
+					</tr>
+					<tr class="mdl-card__supporting-text">
+					  <td >Name</td>
+					  <td>:</td>
+					  <td>
+						<b>
+						  <span id="user_name"></span>
+						</b>
+					  </td>      
+					</tr>
+					<tr class="mdl-card__supporting-text">
+					  <td >Batch</td>
+					  <td>:</td>
+					  <td>
+						<b>
+						  <span id="user_batch"></span>
+						</b>
+					  </td>      
+					</tr>
+					<tr class="mdl-card__supporting-text">
+					  <td >Beat</td>
+					  <td>:</td>
+					  <td>
+						<b>
+						  <span id="user_beat"></span>
+						</b>
+					  </td>      
+					</tr>
+					<tr class="mdl-card__supporting-text">
+					  <td >Facility ID</td>
+					  <td>:</td>
+					  <td>
+						<b>
+						  <span id="user_facility"></span>
+						</b>
+					  </td>      
+					</tr>
+				   <tr class="mdl-card__supporting-text">
+					  <td >IMEI</td>
+					  <td>:</td>
+					  <td>
+						<b>
+						  <span id="user_device" class="text-link-color"></span>
+						</b>
+					  </td>      
+					</tr>
+				  </tbody>
+				</table>
+			</div>   
+		  
+        </h3>
+      </span>
+	</div>	
+	<div class="mdl-card__supporting-text" >	
+		<a id="home" class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white' href='#' >Home</a>
+		<a id="contact" class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white' href='#' style="display:none;" onclick="showMessage('raveesh.gs@indiapost.gov.in')" hidden>Contact</a>
+		<span id="folder_title" class="mdl-card__supporting-text mdl-typography--title"></span>
+	</div>
+
+	
+</div>
+
+<div id="id01" class="" style="margin:0px 40px 80px 32px !important;"></div>
+
+<dialog id="dialog" class="mdl-dialog">
+  <h6>Send Error Log</h6>
+  <div class="mdl-dialog__content"> 
+	To,
+    <ul>
+    	<li class="mdl-typography--subhead">
+			<b>
+				<span id="dialog_content"></span>
+			</b>
+		</li>
+    </ul>    
+   
+  </div>
+  <div class="mdl-dialog__actions">
+    <button type="button" class="mdl-button mdl-js-button mdl-button--accent">Close</button>
+  </div>
+</dialog>
+
+	<div class="mdl-sheet__container">     
+		<a class='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--white' href='#' hidden>Home</a>
+    </div>
+
+<footer class="mdl-mega-footer">
+	<div class="mdl-mega-footer__middle-section">
+
+		<div class="" style="text-align:center;">
+			<b>Department of Posts</b> 
+			<br>		
+			<b>Ministry of Communications</b>
+			<br>
+			Designed & Developed by Centre For Excellence in Postal Technology ( C.E.P.T )
+			<br>
+			Mysuru 570010
+			<br>
+			<br>
+			Department of Posts<sup>&#169;</sup> 2016-2020.
+			<br>
+			All rights reserved.
+		</div>
+
+	</div>
+	
+	<div class="mdl-mega-footer__bottom-section" hidden>    
+    <ul class="mdl-mega-footer__link-list">
+      <li><a href="https://www.indiapost.gov.in/VAS/Pages/Content/disclaimer.aspx">Disclaimer</a></li>
+      <li><a href="https://www.indiapost.gov.in/VAS/Pages/Content/PrivacyPolicy.aspx">Privacy Policy</a></li>
+      <li><a href="https://www.indiapost.gov.in/VAS/Pages/Content/Copyright.aspx">Copyright Information</a></li>
+      <li><a href="https://www.indiapost.gov.in/VAS/Pages/Content/TermsConditions.aspx">Terms &amp; Conditions</a></li>
+    </ul>
+  </div>
+	
+</footer>
+</body>
+</html>
