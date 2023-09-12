@@ -22,6 +22,7 @@ import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
 import './ResetPasswordScreen.dart';
@@ -46,6 +47,10 @@ StreamSubscription<int>? every3seconds;
 class _CommonLoginScreenState extends State<CommonLoginScreen> {
   String? _currentRole;
   String _currentDeviceID = "DeviceID_1";
+
+  /*SharedPreferences _prefs = await SharedPreferences.getInstance();
+  String did=_prefs.getString('DeviceID');*/
+
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();

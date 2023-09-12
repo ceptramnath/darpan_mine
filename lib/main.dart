@@ -22,6 +22,8 @@ import 'Utils/ThemeTesting.dart';
 import 'Utils/delete.dart';
 import 'Authentication/CommonMainScreen.dart';
 
+
+
 final navigatorKey = GlobalKey<NavigatorState>();
 // BuildContext? alertDialogContext;
 
@@ -93,8 +95,11 @@ void main() async {
 // }
 
 iRunPeriodically() async {
+  print("Inside iRunPeriodically() of main.dart");
   await dataSync.download();
   await dataSync.upload();
+  String? deviceID=await SharedPreferenceService().getDevID();
+  print("my device id is : $deviceID");
 
   // String? initialtime=await SharedPreferenceService().getAccessTime();
   //
